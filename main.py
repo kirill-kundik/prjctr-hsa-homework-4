@@ -3,10 +3,12 @@ import time
 
 import requests
 
+DEBUG = False
 NBU_URL = "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json"
 LIQPAY_CASH_URL = "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5"
 LIQPAY_NON_CASH_URL = "https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=11"
-GOOGLE_GA_URL = "https://www.google-analytics.com/mp/collect"
+GOOGLE_GA_DEBUG_URL = "https://www.google-analytics.com/debug/mp/collect"
+GOOGLE_GA_URL = GOOGLE_GA_DEBUG_URL if DEBUG else "https://www.google-analytics.com/mp/collect"
 GOOGLE_GA_API_SECRET = "<YOUR_GA_API_SECRET>"
 GOOGLE_GA_MEASUREMENT_ID = "<YOUR_GA_MEASUREMENT_ID>"
 GOOGLE_GA_CLIENT_ID = "<YOUR_GA_CLIENT_ID>"
