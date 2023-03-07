@@ -13,6 +13,7 @@ fi
 
 APP_DIR=/usr/local/etc/ga-uah-events-sender
 mkdir -p $APP_DIR
+cp main.py $APP_DIR/
 cd $APP_DIR
 
 echo "Setting up Python virtual environment"
@@ -20,7 +21,7 @@ echo "Setting up Python virtual environment"
 python3 -m venv venv
 source venv/bin/activate
 
-eho "Installing Python required libraries"
+echo "Installing Python required libraries"
 # Install required Python packages
 pip install -r requirements.txt
 
