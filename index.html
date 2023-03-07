@@ -1,26 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Obtain Client ID</title>
-</head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=<YOUR_GA_MEASUREMENT_ID>"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<YOUR_GA_MEASUREMENT_ID>"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
 
-    function gtag() {
-        dataLayer.push(arguments);
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', '<YOUR_GA_MEASUREMENT_ID>');
+    </script>
+
+    <meta charset="UTF-8">
+    <title>Rates App</title>
+</head>
+<body>
+<form action="/" method="post">
+    <label for="client_id">Google Client ID: </label>
+    <input id="client_id" name="client_id" type="text" value="" placeholder="required"/>
+
+    <input type="submit" value="Go!"/>
+</form>
+<script>
+    gtag('get', '<YOUR_GA_MEASUREMENT_ID>', 'client_id', (client_id) => {
+        let message = `Google Client ID: '${client_id}'`
+        console.log(message)
+        document.getElementById("client_id").value = client_id
+    })
+
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+    });
+
+    const data = {
+        exchange_date: params.exchange_date,
+        nbu_rate: params.nbu_rate,
+        p24_cash_buy: params.p24_cash_buy,
+        p24_cash_sale: params.p24_cash_sale,
+        p24_non_cash_buy: params.p24_non_cash_buy,
+        p24_non_cash_sale: params.p24_non_cash_sale
     }
 
-    gtag('js', new Date());
+    if (!!data.exchange_date) {
+        const body = document.body;
 
-    gtag('config', '<YOUR_GA_MEASUREMENT_ID>');
-
-    gtag('get', '<YOUR_GA_MEASUREMENT_ID>', 'client_id', (client_id) => {
-        console.log(`gtag activated for: '${client_id}'`)
-    })
+        for (const [key, value] of Object.entries(data)) {
+            const p = document.createElement("p");
+            p.appendChild(document.createTextNode(`${key}: ${value}`))
+            body.appendChild(p)
+        }
+    }
 </script>
-<body>
 </body>
 </html>
